@@ -4,7 +4,6 @@ Solr module, very basic. Only tested on CentOS7 / RedHat7.
 
 It downloads the version defined in hiera from http://archive.apache.org/dist/lucene/solr/, installs Solr following the offcial docu [here](https://lucene.apache.org/solr/guide/7_1/taking-solr-to-production.html#taking-solr-to-production) and starts Solr as a init.d Service.
 
-
 ## Setup
 
 ### Setup Requirements
@@ -20,7 +19,7 @@ include solr
 It uses all the default values from hiera at [data/custom.yaml](data/custom.yaml)
 ## Usage / Reference
 
-Check the hiera file at [data/custom.yaml] for all possible inputs
+Check the hiera file at [data/common.yaml] for all possible inputs
 The only tricky param is maybe *solr::zk_hosts*, you need to actually have Zookeeper running, for it to make sense, e.g.: 
 ```
   #------------------------------------------------------------------------------#
