@@ -3,16 +3,6 @@
 # ===========================
 #
 # Full description of class solr here.
-#
-# Parameters
-# ----------
-#
-# [*collection*]
-#   Solr core collection that will be created after installation
-#
-# [*version*]
-#   Solr version that will be installed
-#
 # Examples
 # --------
 #
@@ -48,7 +38,6 @@ class solr (
   Integer $port           = lookup('solr::port',        { value_type => Integer }),
   String  $memory         = lookup('solr::memory',      { value_type => String }),
   String  $data_dir       = lookup('solr::data_dir',    { value_type => String }),
-  String  $hostname       = lookup('solr::hostname',    { value_type => String }),
   Array[String] $zk_hosts = lookup('solr::zk_hosts',    { value_type => Array[String, 1] }),
 ) {
 
