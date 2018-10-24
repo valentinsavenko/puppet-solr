@@ -19,7 +19,7 @@ include solr
 It uses all the default values from hiera at [data/common.yaml](data/common.yaml)
 ## Usage / Reference
 
-Check the hiera file at [data/common.yaml] for all possible inputs
+Check the hiera file at [data/common.yaml](data/common.yaml) for all possible inputs
 The only tricky param is maybe *solr::zk_hosts*, you need to actually have Zookeeper running, for it to make sense, e.g.: 
 ```
   #------------------------------------------------------------------------------#
