@@ -1,0 +1,44 @@
+---
+
+# 
+solr::collections: []
+
+# The default number of replicas to be created for each shard.
+solr::default_replication_factor: 2
+
+# The default number of shards to be created as part of the collection.
+solr::default_shards: 2
+
+# Optional. Sets the group for file ownership. Valid options: any valid group. Default: 'solr'
+solr::group: 'solr'
+
+# Start Solr with the defined hostname. If this is not specified, 'localhost' will be assumed.
+solr::hostname: 'localhost'
+
+# 
+solr::install_dir: '/opt'
+solr::data_dir: '/opt/solr_data'
+solr::service_name: 'solr'
+
+# Optional. Sets whether or not this instance will manage the defined group. Valid options: `true` or `false`. Default: `true`.
+solr::manage_group: true
+
+# Optional. Sets whether or not this instance will manage the defined user. Valid options: `true` or `false`. Default: `true`.
+solr::manage_user: true
+
+# Start Solr with the defined value as the min (-Xms) and max (-Xmx) heap size for the JVM.
+solr::memory: '-Xms2048m -Xmx2048m'
+
+# Start Solr on the defined port. If this is not specified, '8983' will be used.
+solr::port: 8983
+
+# Optional. Sets the user for file ownership. Valid options: any valid user. Default: `solr`
+solr::user: 'solr'
+
+# 
+solr::version: '7.1.0'
+
+# 
+solr::zk_hosts: []
+
+

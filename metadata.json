@@ -1,0 +1,18 @@
+{
+  "name": "vs-solr",
+  "version": "0.0.1",
+  "author": "valentin.savenko",
+  "summary": "Solr module, very basic.",
+  "license": "Apache-2.0",
+  "source": "https://source.int.netcentric.biz/git/users/valentin.savenko/repos/puppet-solr",
+  "project_page": "https://source.int.netcentric.biz/git/users/valentin.savenko/repos/puppet-solr",
+  "issues_url": "https://source.int.netcentric.biz/git/users/valentin.savenko/repos/puppet-solr",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 1.0.0"
+    }
+  ],
+  "data_provider": null
+}
+
