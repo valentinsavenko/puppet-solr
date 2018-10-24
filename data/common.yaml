@@ -1,44 +1,37 @@
 ---
 
-# 
-solr::collections: []
+# Solr version to download an install
+solr::version: '7.1.0'
 
-# The default number of replicas to be created for each shard.
-solr::default_replication_factor: 2
+# Sets the user for file ownership. Valid options: any valid user. Default: `solr`
+solr::user: 'solr'
+# Sets whether or not this instance will manage the defined user. Valid options: `true` or `false`. Default: `true`.
+solr::manage_user: true
 
-# The default number of shards to be created as part of the collection.
-solr::default_shards: 2
-
-# Optional. Sets the group for file ownership. Valid options: any valid group. Default: 'solr'
+# Sets the group for file ownership. Valid options: any valid group. Default: 'solr'
 solr::group: 'solr'
-
-# Start Solr with the defined hostname. If this is not specified, 'localhost' will be assumed.
-solr::hostname: 'localhost'
-
-# 
-solr::install_dir: '/opt'
-solr::data_dir: '/opt/solr_data'
-solr::service_name: 'solr'
-
-# Optional. Sets whether or not this instance will manage the defined group. Valid options: `true` or `false`. Default: `true`.
+# Sets whether or not this instance will manage the defined group. Valid options: `true` or `false`. Default: `true`.
 solr::manage_group: true
 
-# Optional. Sets whether or not this instance will manage the defined user. Valid options: `true` or `false`. Default: `true`.
-solr::manage_user: true
+# The solr package will be downloaded & installed here
+solr::install_dir: '/opt'
+
+# All Instance specific data will be stored here
+solr::data_dir: '/opt/solr_data'
+
+# The name on the init.d service 
+solr::service_name: 'solr'
 
 # Start Solr with the defined value as the min (-Xms) and max (-Xmx) heap size for the JVM.
 solr::memory: '-Xms2048m -Xmx2048m'
 
-# Start Solr on the defined port. If this is not specified, '8983' will be used.
+# Start Solr on the defined port.
 solr::port: 8983
 
-# Optional. Sets the user for file ownership. Valid options: any valid user. Default: `solr`
-solr::user: 'solr'
-
-# 
-solr::version: '7.1.0'
-
-# 
-solr::zk_hosts: []
+# Set the ZooKeeper connection string if using an external ZooKeeper ensemble
+# e.g. host1:2181, host2:2181
+# comment out if not using SolrCloud
+# solr::zk_hosts: 
+#   - 'localhost:2181'
 
 

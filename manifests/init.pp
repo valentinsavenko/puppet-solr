@@ -38,25 +38,25 @@
 
 
 class solr (
-  String  $group          = lookup('solr::group',       { value_type => String }),
-  String  $hostname       = lookup('solr::hostname',    { value_type => String }),
-  String  $install_dir    = lookup('solr::install_dir', { value_type => String }),
-  String  $data_dir       = lookup('solr::data_dir',    { value_type => String }),
-  Boolean $manage_group   = lookup('solr::manage_group',{ value_type => Boolean }),
-  Boolean $manage_user    = lookup('solr::manage_user', { value_type => Boolean }),
-  String  $memory         = lookup('solr::memory',      { value_type => String }),
-  Integer $port           = lookup('solr::port',        { value_type => Integer }),
   String  $user           = lookup('solr::user',        { value_type => String }),
-  String  $service_name   = lookup('solr::service_name',        { value_type => String }),
+  Boolean $manage_user    = lookup('solr::manage_user', { value_type => Boolean }),
+  String  $group          = lookup('solr::group',       { value_type => String }),
+  Boolean $manage_group   = lookup('solr::manage_group',{ value_type => Boolean }),
+  String  $install_dir    = lookup('solr::install_dir', { value_type => String }),
+  String  $service_name   = lookup('solr::service_name',{ value_type => String }),
   String  $version        = lookup('solr::version',     { value_type => String }),
+  Integer $port           = lookup('solr::port',        { value_type => Integer }),
+  String  $memory         = lookup('solr::memory',      { value_type => String }),
+  String  $data_dir       = lookup('solr::data_dir',    { value_type => String }),
+  String  $hostname       = lookup('solr::hostname',    { value_type => String }),
   Array[String] $zk_hosts = lookup('solr::zk_hosts',    { value_type => Array[String, 1] }),
 ) {
 
   #------------------------------------------------------------------------------#
   # Code                                                                         #
   #------------------------------------------------------------------------------#
-
   # So far based on https://lucene.apache.org/solr/guide/7_1/taking-solr-to-production.html#taking-solr-to-production
+
 
   if $manage_group {
     group { $group:
@@ -70,8 +70,6 @@ class solr (
       gid    => $group,
     }
   }
-
-  $home_dir = "${install_dir}/solr-${$version}"
 
 
   # solr dependency on RedHat servers
@@ -91,28 +89,18 @@ class solr (
     source          => "http://archive.apache.org/dist/lucene/solr/${$version}/solr-${$version}.tgz",
   }
 
-
-  # tar xzf solr-7.1.0.tgz solr-7.1.0/bin/install_solr_service.sh --strip-components=2
-  
+  # Create instance data folder
   file { $data_dir:
     recurse => true,
     owner   => $user,
     group   => $group,
   }
-  # file { "${install_dir}/solr":
-  #   ensure  => 'link',
-  #   target  => $home_dir,
-  #   owner   => $user,
-  #   group   => $group,
-  # }
 
+  # Solr is extracted & installed here
+  $home_dir = "${install_dir}/solr-${$version}"
   
-  # if ! $zk_hosts.empty {
-  #   $zk_hosts_options="-z ${zk_hosts.join(',')}"
-  # }
-
+  # triggers install script as defined in the solr docu
   $install_command = "${home_dir}/bin/install_solr_service.sh ${install_archive} -n -i ${install_dir} -d ${data_dir} -u ${user} -s ${service_name} -p $port"
-
   exec { "Solr install for Solr-${version}" :
         command   => $install_command,
         timeout   => 200,
@@ -136,23 +124,44 @@ class solr (
     ];
   }
   
-  if $memory {
-    $config_file = "/etc/default/${service_name}.in.sh"
+  # default solr config file 
+  $config_file = "/etc/default/${service_name}.in.sh"
+  
+  file { $config_file:
+    path    => $config_file,
+    ensure  => present,
+    require => [
+      Exec["Solr install for Solr-${version}"],
+    ];
+  }
 
-    file { $config_file:
-      ensure => present,
-    }->
+  if $memory {
     file_line { 'Append memory setting to the default config file for the solr service':
       notify  => Service[$service_name],
-      path => $config_file,  
-      line => "SOLR_JAVA_MEM=\"${memory}\"",
-      # match   => '^#?SOLR_JAVA_MEM=*$',
+      path    => $config_file,  
+      line    => "SOLR_JAVA_MEM=\"${memory}\"",
       match   => '.*SOLR_JAVA_MEM=.*',
+      require => File[$config_file],
+
+    }
+  }
+
+  if $zk_hosts {
+    $zk_hosts_options = $zk_hosts.join(',')
+    file_line { 'Append zookeeper settings to the default config file for the solr service':
+      notify  => Service[$service_name],
+      path    => $config_file,  
+      line    => "ZK_HOST=\"${zk_hosts_options}\"",
+      match   => '.*ZK_HOST=.*',
+      require => File[$config_file],
     }
   }
 
 
+  # start and enable solr service
   service { $service_name:
-    ensure     => running,
+    ensure    => running,
+    enable    => true,
   }
+
 }

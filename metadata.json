@@ -1,18 +1,44 @@
 {
-  "name": "vs-solr",
-  "version": "0.0.1",
-  "author": "valentin.savenko",
-  "summary": "Solr module, very basic.",
-  "license": "Apache-2.0",
-  "source": "https://source.int.netcentric.biz/git/users/valentin.savenko/repos/puppet-solr",
-  "project_page": "https://source.int.netcentric.biz/git/users/valentin.savenko/repos/puppet-solr",
-  "issues_url": "https://source.int.netcentric.biz/git/users/valentin.savenko/repos/puppet-solr",
+  "name": "valentinsavenko-solr",
+  "version": "0.5.1",
+  "author": "Valentin Savenko",
+  "summary": "Solr module, very basic. Only tested on CentOS7 / RedHat7",
+  "license": "GNU-3.0",
+  "source": "https://github.com/valentinsavenko/puppet-solr.git",
+  "project_page": "https://github.com/valentinsavenko/puppet-solr",
+  "issues_url": "https://github.com/valentinsavenko/puppet-solr/issues",
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
       "version_requirement": ">= 1.0.0"
     }
   ],
-  "data_provider": null
+  "data_provider": "hiera",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.7.0 < 6.0.0"
+    }
+  ],
+  "tags": [
+    "solr"
+  ],
+  "description": "Solr Module for CentOS & RHEL.",
+  "pdk-version": "1.4.1",
+  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
+  "template-ref": "1.4.1-0-g52adbbb"
 }
-
