@@ -16,7 +16,7 @@ The minimal code to make it run is simply:
 ```
 include solr
 ```
-It uses all the default values from hiera at [data/custom.yaml](data/custom.yaml)
+It uses all the default values from hiera at [data/common.yaml](data/common.yaml)
 ## Usage / Reference
 
 Check the hiera file at [data/common.yaml] for all possible inputs
