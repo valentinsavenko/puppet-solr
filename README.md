@@ -24,7 +24,7 @@ The only tricky param is maybe *solr::zk_hosts*, you need to actually have Zooke
 ```
   #------------------------------------------------------------------------------#
   # deric/puppet-zookeeper                                                       #
-  # https://github.com/deric/puppet-zookeeper                                    #             #
+  # https://github.com/deric/puppet-zookeeper                                    #
   #------------------------------------------------------------------------------#
   class { 'zookeeper': 
     install_method  => 'archive',
