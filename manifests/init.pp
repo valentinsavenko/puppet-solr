@@ -28,17 +28,17 @@
 
 
 class solr (
-  String  $user           = lookup('solr::user',        { value_type => String }),
-  Boolean $manage_user    = lookup('solr::manage_user', { value_type => Boolean }),
-  String  $group          = lookup('solr::group',       { value_type => String }),
-  Boolean $manage_group   = lookup('solr::manage_group',{ value_type => Boolean }),
-  String  $install_dir    = lookup('solr::install_dir', { value_type => String }),
-  String  $service_name   = lookup('solr::service_name',{ value_type => String }),
-  String  $version        = lookup('solr::version',     { value_type => String }),
-  Integer $port           = lookup('solr::port',        { value_type => Integer }),
-  String  $memory         = lookup('solr::memory',      { value_type => String }),
-  String  $data_dir       = lookup('solr::data_dir',    { value_type => String }),
-  Array[String] $zk_hosts = lookup('solr::zk_hosts',    { value_type => Array[String, 1] }),
+  String  $user,
+  Boolean $manage_user,
+  String  $group,
+  Boolean $manage_group,
+  String  $install_dir,
+  String  $service_name,
+  String  $version,
+  Integer $port,
+  String  $memory,
+  String  $data_dir,
+  Array[String] $zk_hosts,
 ) {
 
   #------------------------------------------------------------------------------#
@@ -87,13 +87,13 @@ class solr (
 
   # Solr is extracted & installed here
   $home_dir = "${install_dir}/solr-${$version}"
-  
+
   # triggers install script as defined in the solr docu
   $install_command = "${home_dir}/bin/install_solr_service.sh ${install_archive} -n -i ${install_dir} -d ${data_dir} -u ${user} -s ${service_name} -p $port"
   exec { "Solr install for Solr-${version}" :
         command   => $install_command,
         timeout   => 200,
-        path      => "/usr/bin:/bin",        
+        path      => "/usr/bin:/bin",
         unless    => "/usr/bin/test -e ${home_dir}/.solr-${version}-installed-flag",
         require   => [
           File[$data_dir],
@@ -112,10 +112,10 @@ class solr (
       Exec["Solr install for Solr-${version}"],
     ];
   }
-  
+
   # default solr config file 
   $config_file = "/etc/default/${service_name}.in.sh"
-  
+
   file { $config_file:
     path    => $config_file,
     ensure  => present,
@@ -127,7 +127,7 @@ class solr (
   if $memory {
     file_line { 'Append memory setting to the default config file for the solr service':
       notify  => Service[$service_name],
-      path    => $config_file,  
+      path    => $config_file,
       line    => "SOLR_JAVA_MEM=\"${memory}\"",
       match   => '.*SOLR_JAVA_MEM=.*',
       require => File[$config_file],
@@ -139,7 +139,7 @@ class solr (
     $zk_hosts_options = $zk_hosts.join(',')
     file_line { 'Append zookeeper settings to the default config file for the solr service':
       notify  => Service[$service_name],
-      path    => $config_file,  
+      path    => $config_file,
       line    => "ZK_HOST=\"${zk_hosts_options}\"",
       match   => '.*ZK_HOST=.*',
       require => File[$config_file],
