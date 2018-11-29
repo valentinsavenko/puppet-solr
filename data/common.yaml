@@ -13,13 +13,13 @@ solr::group: 'solr'
 # Sets whether or not this instance will manage the defined group. Valid options: `true` or `false`. Default: `true`.
 solr::manage_group: true
 
-# The solr package will be downloaded & installed here
+# The Solr package will be downloaded & installed here
 solr::install_dir: '/opt'
 
 # All Instance specific data will be stored here
 solr::data_dir: '/opt/solr_data'
 
-# The name on the init.d service 
+# The name of the init.d service 
 solr::service_name: 'solr'
 
 # Start Solr with the defined value as the min (-Xms) and max (-Xmx) heap size for the JVM.
