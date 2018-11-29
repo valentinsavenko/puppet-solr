@@ -1,5 +1,6 @@
 # Puppet-Solr module
 [![Build Status](https://travis-ci.com/valentinsavenko/puppet-solr.svg?branch=master)](https://travis-ci.com/valentinsavenko/puppet-solr)
+
 Solr module, very basic. Only tested on CentOS7 / RedHat7.
 
 It downloads the version defined in hiera from http://archive.apache.org/dist/lucene/solr/, installs Solr following the offcial docu [here](https://lucene.apache.org/solr/guide/7_1/taking-solr-to-production.html#taking-solr-to-production) and starts Solr as a init.d Service.

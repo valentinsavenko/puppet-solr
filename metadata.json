@@ -3,7 +3,7 @@
   "version": "0.6.1",
   "author": "Valentin Savenko",
   "summary": "Solr module, very basic. Only tested on CentOS7 / RedHat7",
-  "license": "GNU-3.0",
+  "license": "GPL-3.0-or-later",
   "source": "https://github.com/valentinsavenko/puppet-solr.git",
   "project_page": "https://github.com/valentinsavenko/puppet-solr",
   "issues_url": "https://github.com/valentinsavenko/puppet-solr/issues",
