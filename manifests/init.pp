@@ -69,13 +69,13 @@ class solr (
   # Download the installer archive and extract the install script
   $install_archive = "${install_dir}/solr-${$version}.tgz"
   archive { $install_archive:
-    checksum_type   => 'sha1',
-    checksum_url    => "http://archive.apache.org/dist/lucene/solr/${$version}/solr-${$version}.tgz.sha1",
-    cleanup         => false,
-    creates         => "dummy_value", # extract every time. This is needed because archive has unexpected behaviour without it. (seems to be mandatory, instead of optional)
-    extract         => true,
-    extract_path    => $install_dir,
-    source          => "http://archive.apache.org/dist/lucene/solr/${$version}/solr-${$version}.tgz",
+    checksum_type => 'sha1',
+    checksum_url  => "http://archive.apache.org/dist/lucene/solr/${$version}/solr-${$version}.tgz.sha1",
+    cleanup       => false,
+    creates       => 'dummy_value', # extract every time. This is needed because archive has unexpected behaviour without it. (seems to be mandatory, instead of optional)
+    extract       => true,
+    extract_path  => $install_dir,
+    source        => "http://archive.apache.org/dist/lucene/solr/${$version}/solr-${$version}.tgz",
   }
 
   # Create instance data folder
@@ -89,13 +89,13 @@ class solr (
   $home_dir = "${install_dir}/solr-${$version}"
 
   # triggers install script as defined in the solr docu
-  $install_command = "${home_dir}/bin/install_solr_service.sh ${install_archive} -n -i ${install_dir} -d ${data_dir} -u ${user} -s ${service_name} -p $port"
+  $install_command = "${home_dir}/bin/install_solr_service.sh ${install_archive} -n -i ${install_dir} -d ${data_dir} -u ${user} -s ${service_name} -p ${port}"
   exec { "Solr install for Solr-${version}" :
-        command   => $install_command,
-        timeout   => 200,
-        path      => "/usr/bin:/bin",
-        unless    => "/usr/bin/test -e ${home_dir}/.solr-${version}-installed-flag",
-        require   => [
+        command => $install_command,
+        timeout => 200,
+        path    => '/usr/bin:/bin',
+        unless  => "/usr/bin/test -e ${home_dir}/.solr-${version}-installed-flag",
+        require => [
           File[$data_dir],
           Archive[$install_archive],
         ];
@@ -103,8 +103,8 @@ class solr (
 
   # Leave breadcrumbs/flags to indicate that the installation + restarts was already performed and should not be repeated next time!
   file { "Solr-${version} - Leave breadcrumbs to indicate that the Solr-${version} was already installed." :
+    ensure  => present,
     path    => "${home_dir}/.solr-${version}-installed-flag",
-    ensure  => 'present',
     owner   => $user,
     mode    => '0644',
     content => "This file indicates that solr was already installed in this version and doesn\'t need to be repeated on every puppet run!",
@@ -117,8 +117,8 @@ class solr (
   $config_file = "/etc/default/${service_name}.in.sh"
 
   file { $config_file:
-    path    => $config_file,
     ensure  => present,
+    path    => $config_file,
     require => [
       Exec["Solr install for Solr-${version}"],
     ];
@@ -149,8 +149,8 @@ class solr (
 
   # start and enable solr service
   service { $service_name:
-    ensure    => running,
-    enable    => true,
+    ensure => running,
+    enable => true,
   }
 
 }
