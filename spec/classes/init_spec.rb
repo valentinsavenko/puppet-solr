@@ -14,7 +14,7 @@ describe 'solr' do
 
     it { is_expected.to contain_user('solr_special_user_name') }
     it { is_expected.to contain_group('solr_special_group_name') }
-    
+
     it { is_expected.to contain_class('Solr') }
 
     it { is_expected.to contain_file('/etc/default/solr_special_service_name.in.sh') }
@@ -30,8 +30,8 @@ describe 'solr' do
         manage_group: false,
       }
     end
+
     it { is_expected.not_to contain_user('solr_special_user_name') }
     it { is_expected.not_to contain_group('solr_special_group_name') }
-    
   end
 end

@@ -1,6 +1,6 @@
 {
   "name": "valentinsavenko-solr",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "author": "Valentin Savenko",
   "summary": "Solr module, very basic. Only tested on CentOS7 / RedHat7",
   "license": "GPL-3.0-or-later",
