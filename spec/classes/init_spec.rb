@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'solr' do
-  context 'user, group created and Class, config and Service loaded' do
+  context 'user, group created and Class, config' do
     let :params do
       {
         version: '7.0.0',
@@ -16,12 +16,9 @@ describe 'solr' do
     it { is_expected.to contain_group('solr_special_group_name') }
 
     it { is_expected.to contain_class('Solr') }
-
-    it { is_expected.to contain_file('/etc/default/solr_special_service_name.in.sh') }
-    it { is_expected.to contain_service('solr_special_service_name').only_with('ensure' => 'running', 'enable' => true) }
   end
 
-  context 'user, group created and Class, config and Service loaded' do
+  context 'unmanaged user and group untouched' do
     let :params do
       {
         user: 'solr_special_user_name',
