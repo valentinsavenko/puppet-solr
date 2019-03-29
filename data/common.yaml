@@ -1,7 +1,7 @@
 ---
 
 # Solr version to download an install
-solr::version: '7.1.0'
+solr::version: '7.7.0'
 
 # Sets the user for file ownership. Valid options: any valid user. Default: `solr`
 solr::user: 'solr'
