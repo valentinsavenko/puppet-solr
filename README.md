@@ -3,7 +3,9 @@
 
 Solr module, very basic. Only tested on CentOS7 / RedHat7.
 
-It downloads the version defined in hiera from http://archive.apache.org/dist/lucene/solr/, installs Solr following the offcial docu [here](https://lucene.apache.org/solr/guide/7_1/taking-solr-to-production.html#taking-solr-to-production) and starts Solr as a init.d Service.
+It downloads the version defined in hiera from http://archive.apache.org/dist/lucene/solr/, installs Solr following the offcial docu [here](https://lucene.apache.org/solr/guide/7_7/taking-solr-to-production.html#taking-solr-to-production) and starts Solr as a init.d Service.
+
+For more info on design decisions check the [blog](https://valentinsavenko.github.io/puppet-module-ecosystem/) I wrote about this module.
 
 ## Setup
 
@@ -32,7 +34,7 @@ The only tricky param is maybe *solr::zk_hosts*, you need to actually have Zooke
   class { 'zookeeper': 
     install_method  => 'archive',
     archive_dl_site => 'http://mirror.netcologne.de/apache.org/zookeeper',
-    archive_version => '3.4.10',
+    archive_version => '3.4.13',
     service_provider    => 'systemd',
     manage_service_file => true,
   }
