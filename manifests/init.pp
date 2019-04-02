@@ -35,6 +35,7 @@ class solr (
   String  $install_dir,
   String  $service_name,
   String  $version,
+  String  $checksum_type,
   Integer $port,
   String  $memory,
   String  $data_dir,
@@ -69,8 +70,8 @@ class solr (
   # Download the installer archive and extract the install script
   $install_archive = "${install_dir}/solr-${$version}.tgz"
   archive { $install_archive:
-    checksum_type => 'sha512',
-    checksum_url  => "http://archive.apache.org/dist/lucene/solr/${$version}/solr-${$version}.tgz.sha512",
+    checksum_type => $checksum_type,
+    checksum_url  => "http://archive.apache.org/dist/lucene/solr/${$version}/solr-${$version}.tgz.${checksum_type}",
     cleanup       => false,
     creates       => 'dummy_value', # extract every time. This is needed because archive has unexpected behaviour without it. (seems to be mandatory, instead of optional)
     extract       => true,
