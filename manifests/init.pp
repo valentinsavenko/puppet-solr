@@ -37,6 +37,7 @@ class solr (
   String  $version,
   Integer $port,
   String  $memory,
+  Boolean $jmx_remote,
   String  $data_dir,
   Array[String] $zk_hosts,
 ) {
@@ -69,8 +70,8 @@ class solr (
   # Download the installer archive and extract the install script
   $install_archive = "${install_dir}/solr-${$version}.tgz"
   archive { $install_archive:
-    checksum_type => 'sha512',
-    checksum_url  => "http://archive.apache.org/dist/lucene/solr/${$version}/solr-${$version}.tgz.sha512",
+    checksum_type => $checksum_type,
+    checksum_url  => "http://archive.apache.org/dist/lucene/solr/${$version}/solr-${$version}.tgz.${checksum_type}",
     cleanup       => false,
     creates       => 'dummy_value', # extract every time. This is needed because archive has unexpected behaviour without it. (seems to be mandatory, instead of optional)
     extract       => true,
@@ -132,6 +133,16 @@ class solr (
       match   => '.*SOLR_JAVA_MEM=.*',
       require => File[$config_file],
 
+    }
+  }
+
+  if $jmx_remote {
+    file_line { 'Enable JMX remote':
+      notify  => Service[$service_name],
+      path    => $config_file,
+      line    => "ENABLE_REMOTE_JMX_OPTS=\"true\"",
+      match   => '.*ENABLE_REMOTE_JMX_OPTS=.*',
+      require => File[$config_file],
     }
   }
 
