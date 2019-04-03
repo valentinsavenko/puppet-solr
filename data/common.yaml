@@ -28,6 +28,9 @@ solr::service_name: 'solr'
 # Start Solr with the defined value as the min (-Xms) and max (-Xmx) heap size for the JVM.
 solr::memory: '-Xms2048m -Xmx2048m'
 
+# Ensure JMX remote monitoring is disabled by default
+solr::jmx_remote: false
+
 # Start Solr on the defined port.
 solr::port: 8983
 

@@ -38,6 +38,7 @@ class solr (
   String  $checksum_type,
   Integer $port,
   String  $memory,
+  Boolean $jmx_remote,
   String  $data_dir,
   Array[String] $zk_hosts,
 ) {
@@ -133,6 +134,16 @@ class solr (
       match   => '.*SOLR_JAVA_MEM=.*',
       require => File[$config_file],
 
+    }
+  }
+
+  if $jmx_remote {
+    file_line { 'Enable JMX remote':
+      notify  => Service[$service_name],
+      path    => $config_file,
+      line    => "ENABLE_REMOTE_JMX_OPTS=\"true\"",
+      match   => '.*ENABLE_REMOTE_JMX_OPTS=.*',
+      require => File[$config_file],
     }
   }
 
