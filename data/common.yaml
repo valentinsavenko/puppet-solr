@@ -39,4 +39,4 @@ solr::port: 8983
 # e.g. 
 # solr::zk_hosts: 
 #   - 'localhost:2181'
-solr::zk_hosts: []
+solr::zk_hosts: 

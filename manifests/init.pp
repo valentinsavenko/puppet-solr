@@ -40,7 +40,7 @@ class solr (
   String  $memory,
   Boolean $jmx_remote,
   String  $data_dir,
-  Array[String] $zk_hosts,
+  Optional[Array[String]] $zk_hosts,
 ) {
 
   #------------------------------------------------------------------------------#
