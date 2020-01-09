@@ -23,9 +23,6 @@
 # Copyright 2018 Michael Strache & Valentin Savenko, Netcentric
 #
 
-# TODO:
-#   - Make download url configurable
-
 
 class solr (
   String  $user,
@@ -35,6 +32,8 @@ class solr (
   String  $install_dir,
   String  $service_name,
   String  $version,
+  String  $archive_url,
+  String  $archive_name,
   String  $checksum_type,
   Integer $port,
   String  $memory,
@@ -69,15 +68,15 @@ class solr (
   }
 
   # Download the installer archive and extract the install script
-  $install_archive = "${install_dir}/solr-${$version}.tgz"
+  $install_archive = "${install_dir}/${archive_name}"
   archive { $install_archive:
     checksum_type => $checksum_type,
-    checksum_url  => "http://archive.apache.org/dist/lucene/solr/${$version}/solr-${$version}.tgz.${checksum_type}",
+    checksum_url  => "${archive_url}/${archive_name}.${checksum_type}",
     cleanup       => false,
     creates       => 'dummy_value', # extract every time. This is needed because archive has unexpected behaviour without it. (seems to be mandatory, instead of optional)
     extract       => true,
     extract_path  => $install_dir,
-    source        => "http://archive.apache.org/dist/lucene/solr/${$version}/solr-${$version}.tgz",
+    source        => "${archive_url}/${archive_name}"
   }
 
   # Create instance data folder
