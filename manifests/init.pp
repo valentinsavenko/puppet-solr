@@ -10,19 +10,6 @@
 #    class { 'solr':
 #      version => '7.7.0',
 #    }
-#
-# Authors
-# -------
-#
-# Michael Strache <michael.strache@netcentric.biz>
-# Valentin Savenko <valentin.savenko@netcentric.biz>
-#
-# Copyright
-# ---------
-#
-# Copyright 2018 Michael Strache & Valentin Savenko, Netcentric
-#
-
 
 class solr (
   String  $user,
